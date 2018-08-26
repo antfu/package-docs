@@ -2,13 +2,12 @@
 'use strict'
 
 /* eslint-disable no-console */
-const _ = require('lodash')
 const fs = require('fs')
-const axios = require('axios')
 const minimist = require('minimist')
 const prettyjson = require('prettyjson')
 const Spinner = require('cli-spinner').Spinner
 const chalk = require('chalk')
+const PackageDocs = require('../src')
 
 const argv = minimist(process.argv.slice(2), {
   alias: {
@@ -52,58 +51,29 @@ if (argv.html) {
   process.exit(1)
 }
 
-let count = 0
 const start_time = +new Date()
 
-const api_url = 'https://api.npms.io/v2'
 const package_file = argv.package
 const package_docs_file = argv.output === true ? 'package-docs.json' : argv.output
 const spinner = new Spinner(chalk.yellow('%s Querying..'))
 spinner.setSpinnerString(6)
 
-async function queryDocs (packages) {
-  if (packages.length === 0)
-    return undefined
-  const result = await axios.post(`${api_url}/package/mget`, packages)
-  return _.mapValues(result.data, info => {
-    count += 1
-    if (info.collected) {
-      if (info.collected.github && info.collected.github.homepage)
-        return info.collected.github.homepage
-      if (info.collected.metadata && info.collected.metadata.links) {
-        return info.collected.metadata.links.homepage ||
-          info.collected.metadata.links.repository ||
-          info.collected.metadata.links.npm ||
-          '<NOT FOUND>'
-      }
-    }
-    return '<NOT FOUND>'
-  })
+async function queryArgs (packages) {
+  const pd = new PackageDocs()
+  start()
+  const info = await pd.query(packages)
+  finished(pd.query_count)
+
+  output({ documents: info })
 }
 
-async function queryPackages (packages) {
-  start()
-  const info = await queryDocs(packages)
-  finished()
-
-  output(info)
-}
-
-async function readAndSave () {
-  const content = fs.readFileSync(package_file)
-  const package_json = JSON.parse(content)
+async function queryPackageJson () {
+  const pd = new PackageDocs()
+  const package_json = await pd.readPackageJson(package_file)
 
   start()
-  const dependencies = await queryDocs(Object.keys(package_json.dependencies || {}))
-  const devDependencies = await queryDocs(Object.keys(package_json.devDependencies || {}))
-  const peerDependencies = await queryDocs(Object.keys(package_json.peerDependencies || {}))
-  finished()
-
-  const info = {
-    dependencies,
-    devDependencies,
-    peerDependencies,
-  }
+  const info = await pd.queryPackageJson(package_json)
+  finished(pd.query_count)
 
   output(info)
 }
@@ -114,7 +84,7 @@ function start () {
   spinner.start()
 }
 
-function finished () {
+function finished (count) {
   if (argv.q)
     return
   spinner.stop(true)
@@ -135,16 +105,9 @@ function output (info) {
 }
 
 function exec () {
-  if (argv._.length) {
-    queryPackages(argv._)
-      .then()
-      .catch(e => console.error(e))
-  }
-  else {
-    readAndSave()
-      .then()
-      .catch(e => console.error(e))
-  }
+  (argv._.length ? queryArgs(argv._) : queryPackageJson())
+    .then()
+    .catch(e => console.error(e))
 }
 
 exec()

@@ -51,10 +51,14 @@ $ package-docs -o
 ## TODO
 - [ ] Better error handling
 - [x] Querying indicator
-- [ ] Publish to npm
+- [x] Publish to npm
 - [ ] Markdown format output
 - [ ] HTML format output
+- [ ] General template output
 - [ ] Unit tests
+- [ ] Rewrite use class
+- [ ] Node.js API
+- [ ] Cache
 
 ## License
 MIT [@antfu](https://github.com/antfu) 2018
