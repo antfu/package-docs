@@ -1,0 +1,36 @@
+{
+  "name": "package-docs",
+  "version": "0.0.1",
+  "description": "Get packages' document homepages from package.json",
+  "main": "index.js",
+  "bin": {
+    "package-docs": "bin/cli.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "npm",
+    "package.json",
+    "doc",
+    "docs",
+    "document",
+    "packages"
+  ],
+  "author": "Anthony Fu <anthonyfu117@hotmail.com>",
+  "engines": {
+    "node": ">=6.0.0"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "chalk": "^2.4.1",
+    "lodash": "^4.17.10",
+    "minimist": "^1.2.0",
+    "prettyjson": "^1.2.1"
+  },
+  "devDependencies": {
+    "eslint": "^5.4.0",
+    "eslint-config-standard": "^11.0.0"
+  }
+}
