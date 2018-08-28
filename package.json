@@ -4,7 +4,7 @@
   "description": "Get packages' document homepages from package.json",
   "main": "index.js",
   "bin": {
-    "package-docs": "bin/cli.js"
+    "package-docs": "bin/package-docs.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -33,15 +33,15 @@
     "axios": "^0.18.0",
     "chalk": "^2.4.1",
     "cli-spinner": "^0.2.8",
+    "inquirer": "^6.2.0",
     "lodash": "^4.17.10",
     "minimist": "^1.2.0",
-    "mustache": "^2.3.2",
+    "opn": "^5.3.0",
     "prettyjson": "^1.2.1"
   },
   "devDependencies": {
     "eslint": "^5.4.0",
     "eslint-config-standard": "^11.0.0",
-    "eslint-loader": "^2.1.0",
     "eslint-plugin-html": "^4.0.5",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-node": "^7.0.1",

@@ -43,20 +43,34 @@ devDependencies:
   eslint-config-standard: https://standardjs.com
 ```
 
+### Output to file
 You may also save the output to json file by specifying the option `-o`, the output will save to `package-docs.json` by default
 ```bash
 $ package-docs -o
 ```
 
+### Inline query
+```bash
+$ package-docs vue vuex
+```
+```
+vue:  http://vuejs.org
+vuex: https://vuex.vuejs.org
+```
+
+### Open in browser
+```bash
+$ package-docs vue --open
+```
+`--open` option will make a prompt to confirm when opening more than 5 urls. You can specify `-y` to bypass the prompt.
+
 ## TODO
+- [x] Open in browser
 - [ ] Better error handling
 - [x] Querying indicator
 - [x] Publish to npm
-- [ ] Markdown format output
-- [ ] HTML format output
-- [ ] General template output
 - [ ] Unit tests
-- [ ] Rewrite use class
+- [x] Rewrite use class
 - [ ] Node.js API
 - [ ] Cache
 
