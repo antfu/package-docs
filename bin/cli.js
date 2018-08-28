@@ -64,7 +64,7 @@ async function queryArgs (packages) {
   const info = await pd.query(packages)
   finished(pd.query_count)
 
-  output({ documents: info })
+  output(info)
 }
 
 async function queryPackageJson () {
