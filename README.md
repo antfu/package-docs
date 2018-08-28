@@ -1,4 +1,10 @@
 # Package Docs
+
+[![npm](https://img.shields.io/npm/v/package-docs.svg?style=flat-square)](https://www.npmjs.com/package/package-docs)
+[![Depfu](https://img.shields.io/depfu/antfu/package-docs.svg?style=flat-square)](https://depfu.com/github/antfu/package-docs?project=Npm)
+[![GitHub](https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square)](https://github.com/antfu/package-docs#readme)
+
+
 Get packages' document homepages from `package.json`
 
 ## Install
